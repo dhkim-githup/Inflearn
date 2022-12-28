@@ -8,7 +8,6 @@ public class SailingDevApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SailingDevApplication.class, args);
-		System.out.println("Hello Spring");
 	}
 
 }
