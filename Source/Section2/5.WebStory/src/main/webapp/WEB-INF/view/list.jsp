@@ -1,9 +1,11 @@
 <%@ page import="com.example.webstory.vo.People" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.example.webstory.comm.DbConn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 
 <%
+	DbConn dbConn = new DbConn();
 	List<People> list = (List<People>) request.getAttribute("list");
 %>
 

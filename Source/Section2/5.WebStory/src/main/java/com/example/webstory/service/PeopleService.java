@@ -12,9 +12,11 @@ import java.util.List;
 
 @Service
 public class PeopleService {
-	
 
-	
+	public PeopleService() {
+		System.out.println("------------- PeopleService 생성자 ------------");
+	}
+
 	public List<People> doSelect(){
 	
 		Connection conn = null; // DB �� connection �� ��ü�� ���� 
