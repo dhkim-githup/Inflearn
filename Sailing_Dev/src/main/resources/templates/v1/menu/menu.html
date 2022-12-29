@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Coffee Menu</title>
   <meta charset="utf-8">
@@ -24,7 +24,7 @@
 <div id="main" style="font-size:large; text-align: center; ">
 
   <div id="search" style="height: 150px;padding: 15px; font-size: small; width: 90%; margin-left: auto;  margin-right: auto;">
-    <h3>[ Coffee menu Management <span style="font-size:30px;">&#9749;</span> ]</h3>
+    <h3>[ Coffee menu Management <span style="font-size:30px;">&#9749;</span> ] <th:block th:text="${where}"></th:block> </h3>
 
     <form name="fm_menu" autocomplete="on">
       <fieldset>
@@ -108,6 +108,21 @@
         <td>수정</td>
         <td>삭제</td>
       </tr>
+
+    <th:block th:each="list : ${list}">
+      <tr>
+        <td>Chk</td>
+        <td th:text="${list.get('No')}">커피No</th>
+        <td th:text="${list.get('name')}">메뉴명</td>
+        <td th:text="${list.get('kind')}">종류</td>
+        <td th:text="${list.get('price')}">가격</td>
+        <td th:text="${list.get('reg_day')}">등록일</td>
+        <td th:text="${list.get('mod_day')}">수정일</td>
+        <td>수정</td>
+        <td>삭제</td>
+      </tr>
+    </th:block>
+
     </tbody>
   </table>
 </div>
