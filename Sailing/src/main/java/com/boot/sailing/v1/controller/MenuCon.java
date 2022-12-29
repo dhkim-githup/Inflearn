@@ -1,4 +1,4 @@
-package com.boot.sailing_dev.v1.controller;
+package com.boot.sailing.v1.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,15 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class Menu {
+public class MenuCon {
 
     @RequestMapping("/v1/menu")
     public String doMenu(Model model){
 
-        // 데이타 만들기
+        // Data 만들기 , List , Map
         List<Map<String, Object>> list = new ArrayList<>();
 
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("No", "1");
         map.put("name", "아이스아메");
         map.put("kind", "커피");
@@ -35,12 +35,11 @@ public class Menu {
         map.put("price", "6,000");
         map.put("reg_day", "2020.10.29");
         map.put("mod_day", "2021.10.29");
-
         list.add(map);
 
-        // Model 사용
-        model.addAttribute("where"," - Member Controller");
-        model.addAttribute("list",list);
+        // Data 송부
+        model.addAttribute("list", list);
+        model.addAttribute("hello", " ========== MenuCon ======== ");
 
         return "/v1/menu/menu";
     }
