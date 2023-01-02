@@ -8,5 +8,10 @@ import java.util.Map;
 @Mapper
 public interface MenuDao {
 
+
     List<Map<String, Object>> doList();
+
+    int doInsert(String strCoffee, String strKind, String strPrice);
+
+    int doDelete(String strNo);
 }

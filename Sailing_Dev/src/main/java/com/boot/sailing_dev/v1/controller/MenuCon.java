@@ -5,10 +5,7 @@ import com.boot.sailing_dev.v1.service.MenuSvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,10 +39,24 @@ public class MenuCon {
     }
 
     @PostMapping("/menu_ins")
-    public String doMenuInsPost(){
+    public String doMenuInsPost(@RequestParam("coffee") String strCoffee,
+                                @RequestParam("kind") String strKind,
+                                @RequestParam("price") String strPrice){
 
-        return "/v1/menu/menu_ins";
+        int i = menuSvc.doInsert(strCoffee, strKind, strPrice);
+
+        return "redirect:/v1/menu";
     }
+
+    @GetMapping("/menu_del")
+    public String doDelete(@RequestParam("no") String strNo){
+        int i = menuSvc.doDelete(strNo);
+
+        return "redirect:/v1/menu";
+
+    }
+
+
 
 
 

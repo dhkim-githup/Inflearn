@@ -62,6 +62,7 @@
       <th>수정일</th>
       <th>수정</th>
       <th>삭제</th>
+
     </tr>
     </thead>
 
@@ -76,8 +77,9 @@
       <td th:text="${#numbers.formatInteger(prod.get('price'),0,'COMMA')}">가격</td>
       <td th:text="${prod.get('reg_day')}">등록일</td>
       <td th:text="${prod.get('mod_day')}">수정일</td>
-      <td>수정</td>
-      <td>삭제</td>
+      <td><a th:href="@{/v1/menu_up(no=${prod.get('no')})}">수정</a></td>
+      <td><a th:href="@{/v1/menu_del(no=${prod.get('no')})}">삭제</a></td>
+
     </tr>
 
 

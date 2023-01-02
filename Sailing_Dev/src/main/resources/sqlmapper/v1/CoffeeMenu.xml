@@ -5,12 +5,23 @@
 
 <mapper namespace="com.boot.sailing_dev.v1.dao.MenuDao">
 
-
+    <!-- 메뉴 조회 -->
     <select id="doList" resultType="map">
         SELECT no, coffee, kind, price,
         DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
         DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
         FROM coffee_menu
     </select>
+
+    <!-- 메뉴 등록 -->
+    <insert id="doInsert">
+        INSERT INTO coffee_menu (coffee, kind, price)
+        VALUES ( #{strCoffee},#{strKind},CAST(#{strPrice} as INTEGER) )
+    </insert>
+
+    <!-- 메뉴 삭제 -->
+    <delete id="doDelete">
+        delete from coffee_menu where no = CAST(#{strNo} as INTEGER)
+    </delete>
 
 </mapper>
