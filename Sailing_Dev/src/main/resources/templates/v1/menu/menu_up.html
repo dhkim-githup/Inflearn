@@ -21,7 +21,7 @@
   <div id="search" style="height: 300px;padding: 15px; font-size: small; width: 90%; margin-left: auto;  margin-right: auto;">
     <h3>[ Coffee menu 수정 <span style="font-size:30px;">&#9749;</span> ] <th:block th:text="${hello}"></th:block>  </h3>
 
-    <form name="fm_menu_ins" autocomplete="on" action="/v1/menu_ins" method="post">
+    <form name="fm_menu_ins" autocomplete="on" action="/v1/menu_up" method="post">
       <fieldset>
 
         <legend> [커피 메뉴 등록] </legend>
@@ -34,9 +34,9 @@
                           </p>
         &nbsp;&nbsp;
         <label>가 격 </label><input type="number" name="price" th:value="${map.get('price')}"></p>
-        <input type="hidden" name="coffee_id" th:value="${map.get('no')}">
+        <input type="hidden" name="no" th:value="${map.get('no')}">
 
-        <input type="submit" value="메뉴 등록" style="width: 100px;height: 30px;font-weight: bold; font-size: medium">
+        <input type="submit" value="메뉴 수정" style="width: 100px;height: 30px;font-weight: bold; font-size: medium">
       </fieldset>
     </form>
 

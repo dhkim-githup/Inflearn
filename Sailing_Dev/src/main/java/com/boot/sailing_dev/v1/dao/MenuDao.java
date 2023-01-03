@@ -14,4 +14,10 @@ public interface MenuDao {
     int doInsert(String strCoffee, String strKind, String strPrice);
 
     int doDelete(String strNo);
+
+    /* 커피 One row 가져오기 */
+    Map<String, String> doListOne(String strNo);
+
+    /* 메뉴정보 수정하기 */
+    int doUpdate(String strNo, String strCoffee, String strKind, String strPrice);
 }

@@ -80,4 +80,17 @@ public class MenuSvc {
         int i = menuDao.doDelete(strNo);
         return i;
     }
+
+    /* 커피 One row 가져오기 */
+    public Map<String, String> doListOne(String strNo) {
+        Map<String,String>  map = menuDao.doListOne(strNo);
+        return map;
+    }
+
+    /* 메뉴정보 수정하기 */
+    public int doUpdate(String strNo, String strCoffee, String strKind, String strPrice) {
+        int i = menuDao.doUpdate(strNo, strCoffee, strKind, strPrice);
+        return i;
+
+    }
 }
