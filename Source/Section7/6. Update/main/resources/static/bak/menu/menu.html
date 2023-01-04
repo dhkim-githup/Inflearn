@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
   <title>Coffee Menu</title>
   <meta charset="utf-8">
@@ -13,13 +13,18 @@
 <body>
 
 <!-- 헤더 위치 -->
-<th:block th:replace="/v1/comm/header :: headerFragment"></th:block>
+<div class="topnav">
+  <a href="/home/home.html">Home</a>
+  <a href="/menu/menu.html">커피메뉴</a>
+  <a href="/order/order.html">주문내역</a>
+  <a href="/member/member.html">고객정보</a>
+</div>
 
 
 <div id="main" style="font-size:large; text-align: center; ">
 
   <div id="search" style="height: 150px;padding: 15px; font-size: small; width: 90%; margin-left: auto;  margin-right: auto;">
-    <h3>[ Coffee menu Management <span style="font-size:30px;">&#9749;</span> ] <th:block th:text="${hello}"></th:block>  </h3>
+    <h3>[ Coffee menu Management <span style="font-size:30px;">&#9749;</span> ]</h3>
 
     <form name="fm_menu" autocomplete="on">
       <fieldset>
@@ -38,7 +43,7 @@
       </select>
 
         &nbsp;&nbsp;<input type="submit" value="조회" style="width: 80px;height: 30px;font-weight: bold; font-size: medium">
-        &nbsp;&nbsp;<button style="width: 80px;height: 30px;font-weight: bold; font-size: medium"><a href="/v1/menu_ins">등록</a></button>
+        &nbsp;&nbsp;<button style="width: 80px;height: 30px;font-weight: bold; font-size: medium"><a href="~~~">등록</a></button>
         &nbsp;&nbsp;<button style="width: 80px;height: 30px;font-weight: bold; font-size: medium"><a href="~~~">삭제</a></button>
         <!-- <a href="javascript:loadDocArray()">test</a> -->
         <!--        <label>CheckBox : </label><span id="idCheckBox"></span>-->
@@ -68,29 +73,50 @@
 
     <tbody id="t_body">
     <!--- 데이타 출력 부분 -->
+      <tr class="tr_td">
+        <td>Chk</td>
+        <th>커피No</th>
+        <td>메뉴명</td>
+        <td>종류</td>
+        <td>가격</td>
+        <td>등록일</td>
+        <td>수정일</td>
+        <td>수정</td>
+        <td>삭제</td>
+      </tr>
 
+      <tr class="tr_td">
+        <td>Chk</td>
+        <th>커피No</th>
+        <td>메뉴명</td>
+        <td>종류</td>
+        <td>가격</td>
+        <td>등록일</td>
+        <td>수정일</td>
+        <td>수정</td>
+        <td>삭제</td>
+      </tr>
 
-    <tr th:each="prod : ${list}">
-      <td>Chk</td>
-      <td th:text="${prod.get('no')}">커피No</th>
-      <td th:text="${prod.get('coffee')}">메뉴명</td>
-      <td th:text="${prod.get('kind')}">종류</td>
-      <td th:text="${prod.get('price')}">가격</td>
-      <td th:text="${prod.get('reg_day')}">등록일</td>
-      <td th:text="${prod.get('mod_day')}">수정일</td>
-      <td><a th:href="@{/v1/menu_up(no=${prod.get('no')})}">수정</a></td>
-      <td><a th:href="@{/v1/menu_del(no=${prod.get('no')})}">삭제</a></td>
-    </tr>
-
-
-
-
+      <tr class="tr_td">
+        <td>Chk</td>
+        <th>커피No</th>
+        <td>메뉴명</td>
+        <td>종류</td>
+        <td>가격</td>
+        <td>등록일</td>
+        <td>수정일</td>
+        <td>수정</td>
+        <td>삭제</td>
+      </tr>
     </tbody>
   </table>
 </div>
 
-<!--푸터위치-->
-<th:block th:replace="/v1/comm/footer :: footerFragment"></th:block>
+<!-- 푸터 위치 -->
+<div class="footer">
+  <!--    https://www.w3schools.com/html/html_emojis.asp   -->
+  <h4>[Footer] <span style="font-size:30px;">&#9973;</span> Spring boot 항해 ~ with Me</h4>
+</div>
 
 </body>
 </html>
