@@ -23,4 +23,14 @@ public interface MenuDao {
 
     /* 검색 */
     List<Map<String, Object>> doSearch(String strStartDate, String strEndDate, String strCoffee, String strKind);
+
+    /* 가격 로그입력 */
+    int doInsertLog(String strNo, String strPrice);
+
+    /* 가격 변경 */
+    int doUpdatePrice(String strNo, String strPrice);
+
+    int doInsertLogOne(List<String> chkList, String strPrice);
+
+    int doUpdatePriceOne(List<String> chkList, String strPrice);
 }

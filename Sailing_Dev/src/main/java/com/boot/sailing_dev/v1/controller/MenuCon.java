@@ -104,6 +104,25 @@ public class MenuCon {
         return "/v1/menu/menu";
     }
 
+    @PostMapping("/updatePrice")
+    public String doUpdatePrice( @RequestParam(value = "chkCoffeeNo", required = false) List<String> chkList,
+                                 @RequestParam("hidden_price") String strPrice
+                                ){
+            log.info(chkList);
+            /* 체크박스만큼 Loop 실행 */
+            if(chkList != null ) {
+//                for (String strNo : chkList) {
+//                    int int1 = menuSvc.doInsertLog(strNo, strPrice);
+//                    int int2 = menuSvc.doUpdatePrice(strNo, strPrice);
+//                }
+
+                int int1 = menuSvc.doInsertLogOne(chkList, strPrice);
+                int int2 = menuSvc.doUpdatePriceOne(chkList, strPrice);
+            }
+
+        return "redirect:/v1/menu";
+
+    }
 
 
 

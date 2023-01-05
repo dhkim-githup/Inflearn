@@ -71,7 +71,7 @@
       <tbody id="t_body">
       <!--- 데이타 출력 부분 -->
       <tr th:each="prod : ${list}">
-        <td><input type="checkbox" name="chkCoffee_id" th:value="${prod.get('no')}"></td>
+        <td><input type="checkbox" name="chkCoffeeNo" th:value="${prod.get('no')}"></td>
         <td th:text="${prod.get('no')}">커피No</th>
         <td th:text="${prod.get('coffee')}">메뉴명</td>
         <td th:text="${prod.get('kind')}">종류</td>
@@ -98,14 +98,19 @@
 
   function onModify(){
     let _price = prompt("가격을 입력하세요.");
-      if(_price != ""){
+
+    if(_price == undefined){
+       return;
+    }else if(_price ==""){
+      alert("가격을 입력해주세요.");
+      onModify();
+    }else if(_price != "") {
         // 처리 , 체크박스 가져오기
         let _frm = document.formTable;
-        _frm.hidden_price.value=_price;
+        _frm.hidden_price.value = _price;
         _frm.submit();
-      }else{
-        alert("가격을 입력해주세요.");
-      }
+    }
+
   }
 </script>
 

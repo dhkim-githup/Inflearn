@@ -102,6 +102,28 @@ public class MenuSvc {
 
         return list;
     }
+
+    /* 가격 로그입력 */
+    public int doInsertLog(String strNo, String strPrice) {
+        int int1 = menuDao.doInsertLog(strNo, strPrice);
+        return int1;
+    }
+
+    /* 가격변경 */
+    public int doUpdatePrice(String strNo, String strPrice) {
+        int int2 = menuDao.doUpdatePrice(strNo, strPrice);
+        return int2;
+    }
+
+    public int doInsertLogOne(List<String> chkList, String strPrice) {
+        int int1 = menuDao.doInsertLogOne(chkList, strPrice);
+        return int1;
+    }
+
+    public int doUpdatePriceOne(List<String> chkList, String strPrice) {
+        int int2 = menuDao.doUpdatePriceOne(chkList, strPrice);
+        return int2;
+    }
 }
 
 
