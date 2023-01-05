@@ -93,4 +93,16 @@ public class MenuSvc {
         return i;
 
     }
+
+    /* 검색 */
+    public List<Map<String, Object>> doSearch(String strStartDate, String strEndDate, String strCoffee, String strKind) {
+
+        // Data 만들기 , List , Map
+        List<Map<String, Object>> list = menuDao.doSearch(strStartDate, strEndDate,strCoffee,strKind  );
+
+        return list;
+    }
 }
+
+
+

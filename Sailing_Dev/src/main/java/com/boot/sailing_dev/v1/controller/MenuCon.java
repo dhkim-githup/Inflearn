@@ -2,6 +2,7 @@ package com.boot.sailing_dev.v1.controller;
 
 
 import com.boot.sailing_dev.v1.service.MenuSvc;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/v1")
+@Log4j2
 public class MenuCon {
 
     @Autowired
@@ -78,6 +80,29 @@ public class MenuCon {
         return "redirect:/v1/menu";
     }
 
+    /* 조회 */
+    @PostMapping("menu_search")
+    public String doSearch( @RequestParam("start_date") String strStartDate,
+                            @RequestParam("end_date") String strEndDate,
+                            @RequestParam(value = "coffee",defaultValue = "ALL") String strCoffee,
+                            @RequestParam(value = "kind", defaultValue = "ALL") String strKind,
+                            Model model
+                            ){
+
+        log.info(" ========================================== strStartDate :"+strStartDate);
+        log.info(" ========================================== strEndDate :"+strEndDate);
+        log.info(" ========================================== strCoffee :"+strCoffee);
+        log.info(" ========================================== strCoffee :"+strKind);
+
+        // Data 만들기 , List , Map
+        List<Map<String, Object>> list = menuSvc.doSearch(strStartDate, strEndDate,strCoffee,strKind  );
+
+        log.info(list);
+
+        model.addAttribute("list",list);
+
+        return "/v1/menu/menu";
+    }
 
 
 

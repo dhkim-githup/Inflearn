@@ -20,4 +20,7 @@ public interface MenuDao {
 
     /* 메뉴정보 수정하기 */
     int doUpdate(String strNo, String strCoffee, String strKind, String strPrice);
+
+    /* 검색 */
+    List<Map<String, Object>> doSearch(String strStartDate, String strEndDate, String strCoffee, String strKind);
 }
