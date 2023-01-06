@@ -24,6 +24,8 @@ CREATE TABLE cust_info (
 COMMENT='고객정보'
 ;
 
+-- unique index 생성
+CREATE UNIQUE INDEX idx_cust_info ON cust_info(cust_id);
 
 CREATE TABLE order_list (
 	no INT(11) NOT NULL AUTO_INCREMENT,
@@ -38,9 +40,26 @@ CREATE TABLE order_list (
 COMMENT='주문내역'
 ;
 
+-- foreign key 생성
+ALTER TABLE order_list
+ADD CONSTRAINT fk_coffee_no
+FOREIGN KEY (coffee_no)
+REFERENCES coffee_menu(no);
+
 
 ALTER TABLE order_list
 ADD CONSTRAINT fk_cust_id
 FOREIGN KEY (cust_id)
 REFERENCES cust_info(cust_id);
 
+---------------------------------------------------
+
+CREATE TABLE coffee_menu_log (
+	no INT(11) NOT NULL AUTO_INCREMENT,
+	coffee_no INT(11) NULL DEFAULT '0',
+	price INT(11) NULL DEFAULT '0',
+	reg_day DATETIME NULL DEFAULT current_timestamp(),
+	PRIMARY KEY (no)
+)
+COMMENT='커피로그'
+;
