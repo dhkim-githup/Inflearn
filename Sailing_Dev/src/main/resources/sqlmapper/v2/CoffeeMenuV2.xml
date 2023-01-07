@@ -3,86 +3,78 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.boot.sailing_dev.v2_vo.dao.MenuDaoV2">
+<mapper namespace="com.boot.sailing_dev.v2.dao.MenuDaoV2">
+    <!-- 메뉴 조회 -->
+    <select id="doList" resultType="com.boot.sailing_dev.v2.vo.Coffee_menu">
+        SELECT no, coffee, kind, price,
+        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
+        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+        FROM coffee_menu
+    </select>
 
     <!--
         <![CDATA[   ]]>   : xml 파싱에 관여하지 않도록 처리
         <  	&lt;
         >	&gt;
     -->
-
-    <!-- 메뉴 조회 전체 -->
-    <select id="doList" resultType="com.boot.sailing_dev.v2_vo.vo.Coffee_menu">
+    <!-- 검색에 의한 쿼리 -->
+    <select id="doSerch" resultType="com.boot.sailing_dev.v2.vo.Coffee_menu">
         SELECT no, coffee, kind, price,
-        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
-        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
-        FROM coffee_menu
-    </select>
-
-    <!-- 메뉴 조회 One row -->
-    <select id="doListOne" resultType="com.boot.sailing_dev.v2_vo.vo.Coffee_menu">
-        SELECT no, coffee, kind, price,
-        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
-        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
-        FROM coffee_menu
-        WHERE no = CAST(#{strNo} as INTEGER)
-    </select>
-
-    <!-- 검색조건 검색 -->
-    <select id="doSearch" resultType="map">
-        SELECT no, coffee, kind, price,
-                DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
-                DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+            DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
+            DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
         FROM coffee_menu
         WHERE 1=1
-        <![CDATA[
-            AND reg_day >= DATE_FORMAT( #{strStartDate},'%Y%m%d')
-            AND reg_day < DATE_ADD(DATE_FORMAT(#{strEndDate},'%Y%m%d'), INTERVAL +1 DAY)
-        ]]>
-        <if test="strCoffee != 'ALL' ">
+        AND reg_day >= DATE_FORMAT( #{strStartDate},'%Y%m%d')
+        AND reg_day &lt; DATE_ADD(DATE_FORMAT(#{strEndDate},'%Y%m%d'), INTERVAL +1 DAY)
+        <if test="strCoffee != 'ALL'">
             AND coffee like CONCAT(#{strCoffee},'%')
         </if>
-        <if test="strKind != 'ALL' ">
+        <if test="strKind != 'ALL'">
             AND kind = #{strKind}
         </if>
-        ORDER BY no, coffee
     </select>
 
+    <!-- 메뉴 조회 - One row -->
+    <select id="doListOne" resultType="map">
+        SELECT no, coffee, kind, price,
+        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
+        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+        FROM coffee_menu
+        Where no = CAST(#{strNo} as INTEGER)
+    </select>
 
-
-    <!-- 메뉴 등록 -->
     <insert id="doInsert">
         INSERT INTO coffee_menu (coffee, kind, price)
-        VALUES ( #{strCoffee},#{strKind},CAST(#{strPrice} as INTEGER) )
+        VALUES(#{coffee},#{kind},CAST(#{price} as INTEGER))
     </insert>
 
-    <!-- 메뉴 삭제 -->
-    <delete id="doDelete">
-        Delete from coffee_menu
-        Where no = CAST(#{strNo} as INTEGER)
-    </delete>
-
-    <!-- 메뉴 수정 -->
     <update id="doUpdate">
-        Update coffee_menu set
+        Update coffee_menu
+        Set
             coffee = #{coffee},
             kind = #{kind},
             price = CAST(#{price} as INTEGER)
         Where no = CAST(#{no} as INTEGER)
     </update>
 
-    <!-- 가격 로그입력 -->
-    <insert id="doInsertLog">
-        INSERT INTO log (no, price)
-        VALUES ( #{strNo}, CAST(#{strPrice} as INTEGER) )
-    </insert>
+    <!-- 삭제처리 -->
+    <delete id="doDelete">
+        Delete from coffee_menu
+        Where no = CAST(#{strNo} as INTEGER)
+    </delete>
 
-    <!-- 메뉴 수정 -->
+    <!-- 메뉴 가격 수정  -->
     <update id="doUpdatePrice">
         Update coffee_menu set
-              price = CAST(#{strPrice} as INTEGER)
+        price = CAST(#{strPrice} as INTEGER)
         Where no = CAST(#{strNo} as INTEGER)
     </update>
+
+    <!-- 가격 로그입력 -->
+    <insert id="doInsertLog">
+        INSERT INTO coffee_menu_log (coffee_no, price)
+        VALUES ( #{strNo}, CAST(#{strPrice} as INTEGER) )
+    </insert>
 
     <!-- 메뉴 가격 수정 원쿼리  -->
     <update id="doUpdatePriceOne">
