@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.sailing.v1.dao.MenuDao">
+    <!-- 메뉴 조회 -->
+    <select id="doList" resultType="map">
+        SELECT no, coffee, kind, price,
+        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
+        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+        FROM coffee_menu
+    </select>
+
+    <!-- 메뉴 조회 - One row -->
+    <select id="doListOne" resultType="map">
+        SELECT no, coffee, kind, price,
+        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
+        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+        FROM coffee_menu
+        Where no = CAST(#{strNo} as INTEGER)
+    </select>
+
+    <insert id="doInsert">
+        INSERT INTO coffee_menu (coffee, kind, price)
+        VALUES(#{strCoffee},#{strKind},CAST(#{strPrice} as INTEGER))
+    </insert>
+
+    <update id="doUpdate">
+        Update coffee_menu
+        Set
+            coffee = #{strCoffee},
+            kind = #{strKind},
+            price = CAST(#{strPrice} as INTEGER)
+        Where no = CAST(#{strNo} as INTEGER)
+    </update>
+
+    <delete id="doDelete">
+        Delete from coffee_menu
+        Where no = CAST(#{strNo} as INTEGER)
+    </delete>
+
+</mapper>
