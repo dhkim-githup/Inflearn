@@ -5,6 +5,7 @@ import com.boot.sailing.v2.vo.Coffee_menu;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,4 +128,14 @@ public class MenuSvcV2 {
         return int2;
     }
 
+
+    @Transactional
+    public int doUpdateInsert(List<String> chkList, String strPrice) {
+        log.info("==================== ||||||||||||| ====================");
+
+        int int2 = menuDao.doUpdatePriceOne(chkList, strPrice);
+        int int1 = menuDao.doInsertLogOne(chkList, strPrice);
+
+        return int1;
+    }
 }

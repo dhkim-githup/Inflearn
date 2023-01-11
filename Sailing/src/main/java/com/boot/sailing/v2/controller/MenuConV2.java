@@ -106,8 +106,9 @@ public class MenuConV2 {
 //                 int int1 = menuSvc.doInsertLog(strNo, strPrice);
 //                 int int2 = menuSvc.doUpdatePrice(strNo, strPrice);
 //            }
-              int int1 = menuSvc.doInsertLogOne(chkList, strPrice);
-              int int2 = menuSvc.doUpdatePriceOne(chkList, strPrice);
+              int int1 = menuSvc.doUpdateInsert(chkList, strPrice);
+              //int int1 = menuSvc.doInsertLogOne(chkList, strPrice);
+              //int int2 = menuSvc.doUpdatePriceOne(chkList, strPrice);
         }
 
         return "redirect:/v2/menu";
