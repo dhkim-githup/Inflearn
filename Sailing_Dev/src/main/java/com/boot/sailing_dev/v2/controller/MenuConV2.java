@@ -107,8 +107,14 @@ public class MenuConV2 {
 //                 int int1 = menuSvc.doInsertLog(strNo, strPrice);
 //                 int int2 = menuSvc.doUpdatePrice(strNo, strPrice);
 //            }
-              int int1 = menuSvc.doInsertLogOne(chkList, strPrice);
-              int int2 = menuSvc.doUpdatePriceOne(chkList, strPrice);
+//              int int1 = menuSvc.doInsertLogOne(chkList, strPrice);
+//              int int2 = menuSvc.doUpdatePriceOne(chkList, strPrice);
+            try {
+                int int1 = menuSvc.doInsertUpdate(chkList, strPrice);
+            }catch (Exception e){
+                log.info("Error Error Error Error "+e.getMessage());
+            }
+
         }
 
         return "redirect:/v2/menu";

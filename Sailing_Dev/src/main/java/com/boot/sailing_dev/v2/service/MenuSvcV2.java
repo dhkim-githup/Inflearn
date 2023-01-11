@@ -5,6 +5,7 @@ import com.boot.sailing_dev.v2.vo.Coffee_menu;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,4 +128,22 @@ public class MenuSvcV2 {
         return int2;
     }
 
+    /* Insert , Update 처리 */
+
+    @Transactional
+    public int doInsertUpdate(List<String> chkList, String strPrice) throws RuntimeException {
+        log.info("========================= |||||||||||||| ==================");
+        int int1=0;
+        try {
+            int int2 = menuDao.doUpdatePriceOne(chkList, strPrice);
+                int1 = menuDao.doInsertLogOne(chkList, strPrice);
+        }catch(Exception e){
+            log.info("Error 발생 ======="+ getClass().getName() +e.getMessage());
+            log.info("Error 발생 getClass ======="+ getClass());
+            log.info("Error 발생 getName ======="+ getClass().getName());
+            log.info("Error 발생 getStackTrace ======="+ Thread.currentThread().getStackTrace()[1].getMethodName());
+            throw  new RuntimeException();
+            }
+        return int1;
+    }
 }

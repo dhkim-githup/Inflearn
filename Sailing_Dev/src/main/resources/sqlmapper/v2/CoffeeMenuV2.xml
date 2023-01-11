@@ -79,7 +79,7 @@
     <!-- 메뉴 가격 수정 원쿼리  -->
     <update id="doUpdatePriceOne">
         Update coffee_menu set
-        price7 = CAST(#{strPrice} as INTEGER)
+        price = CAST(#{strPrice} as INTEGER)
         <where>
             <foreach item="item" index="index" collection="chkList" open="no in (" separator="," close=")" nullable="true">
                 #{item}
@@ -89,7 +89,7 @@
 
     <!-- 가격 로그입력 원쿼리 -->
     <insert id="doInsertLogOne">
-        INSERT INTO coffee_menu_log (coffee_no, price)
+        INSERT INTO coffee_menu_log7 (coffee_no, price)
         <foreach item="item" index="index" collection="chkList"  separator=" UNION ALL "  nullable="true">
             SELECT #{item},  CAST(#{strPrice} as INTEGER) FROM DUAL
         </foreach>
