@@ -99,8 +99,11 @@ public class MenuConV2 {
     /* 가격 수정 - 다중 체크 */
     @PostMapping("/menu_updatePrice")
     public String doUpdatePrice(@RequestParam("chkCoffeeNo") List<String> chkList,
-                                @RequestParam("hidden_price") String strPrice
+                                @RequestParam("hidden_price") String strPrice,
+                                Model model
     ){
+
+        String strReturn = "redirect:/v2/menu";
 
         if(chkList != null){
 //            for(String strNo : chkList){
@@ -112,12 +115,15 @@ public class MenuConV2 {
             try {
                 int int1 = menuSvc.doInsertUpdate(chkList, strPrice);
             }catch (Exception e){
-                log.info("Error Error Error Error "+e.getMessage());
+                log.info("Error Error Error Error : "+e.getMessage());
+
+                model.addAttribute("em", e.getMessage());
+                strReturn = "/v2/comm/ErrorPage";
             }
 
         }
 
-        return "redirect:/v2/menu";
+        return strReturn;
 
     }
 

@@ -34,4 +34,7 @@ public interface MenuDaoV2 {
 
     /* Update 원 쿼리 */
     int doUpdatePriceOne(List<String> chkList, String strPrice);
+
+
+    int doBootLog(String strClass);
 }

@@ -22,7 +22,9 @@ class MenuSvcV2Test {
         chkList.add("1");
         chkList.add("2");
 
-        String strPrice = "888888";
-        menuSvcV2.doInsertUpdate(chkList, strPrice);
+        String strPrice = "5959";
+
+            menuSvcV2.doInsertUpdate(chkList, strPrice);
+
     }
 }

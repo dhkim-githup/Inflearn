@@ -1,12 +1,23 @@
 package com.boot.sailing_dev.v2.service;
 
+import com.boot.sailing_dev.comm.Bootlog;
+import com.boot.sailing_dev.comm.MyExceptionRuntime;
 import com.boot.sailing_dev.v2.dao.MenuDaoV2;
 import com.boot.sailing_dev.v2.vo.Coffee_menu;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +29,17 @@ public class MenuSvcV2 {
 
     @Autowired
     MenuDaoV2 menuDao;
+
+    @Autowired
+    Bootlog bootlog;
+
+    @Autowired
+    PlatformTransactionManager transactionManager;
+    @Autowired
+    TransactionDefinition definition;
+
+    @Autowired
+    TransactionTemplate transactionTemplate;
 
     public MenuSvcV2() {
         log.info("================ MenuSvc , 생성자 ===================");
@@ -129,21 +151,115 @@ public class MenuSvcV2 {
     }
 
     /* Insert , Update 처리 */
+    public int doInsertUpdate(List<String> chkList, String strPrice) throws MyExceptionRuntime  {
 
-    @Transactional
-    public int doInsertUpdate(List<String> chkList, String strPrice) throws RuntimeException {
-        log.info("========================= |||||||||||||| ==================");
+        int rI=0;
+
+        try {
+
+            rI = transactionTemplate.execute(status -> {
+                int int2 = menuDao.doUpdatePriceOne(chkList, strPrice);
+                status.setRollbackOnly();
+                return int2;
+            });
+
+            /*
+            rI = transactionTemplate.execute(status -> {
+                // 가격 일괄변경
+                int int1 = menuDao.doInsertLogOne(chkList, strPrice);
+                return int1;
+            });
+            */
+
+            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+                @Override
+                protected void doInTransactionWithoutResult(TransactionStatus status) {
+                    int int1 = menuDao.doInsertLogOne(chkList, strPrice);
+                    status.setRollbackOnly();
+                }
+            });
+
+        }catch (Exception e){
+            throw new MyExceptionRuntime(e.getMessage(), getClass().getName());
+        }finally {
+            log.info("==================== Finally ====================");
+            TransactionStatus status3 = transactionManager.getTransaction(definition);
+            bootlog.doBootLog(getClass().getName());
+            transactionManager.commit(status3);
+        }
+
+        return rI;
+
+    }
+
+    /* Insert , Update 처리 */
+    /*
+    public int doInsertUpdate(List<String> chkList, String strPrice) throws MyExceptionRuntime  {
+
+        int int1=0;
+        try {
+            TransactionStatus status = transactionManager.getTransaction(definition);
+            log.info("============1 status.toString() ==============="+ status.isCompleted());
+
+            int int2 = menuDao.doUpdatePriceOne(chkList, strPrice);
+            transactionManager.rollback(status);
+
+            TransactionStatus status2 = transactionManager.getTransaction(definition);
+            int1 = menuDao.doInsertLogOne(chkList, strPrice);
+            log.info("============2 status.toString() ==============="+ status.isCompleted());
+            transactionManager.commit(status2);
+
+            log.info("============3 status.toString() ==============="+ status.isCompleted());
+        }catch (Exception e){
+              throw new MyExceptionRuntime(e.getMessage(), getClass().getName());
+        }finally {
+            log.info("==================== Finally ====================");
+            TransactionStatus status3 = transactionManager.getTransaction(definition);
+            bootlog.doBootLog(getClass().getName());
+            transactionManager.commit(status3);
+        }
+
+        return int1;
+
+    }
+
+     */
+
+    /*
+    @Transactional(propagation = Propagation.REQUIRED)
+    public int doInsertUpdate(List<String> chkList, String strPrice) throws MyExceptionRuntime  {
+
         int int1=0;
         try {
             int int2 = menuDao.doUpdatePriceOne(chkList, strPrice);
-                int1 = menuDao.doInsertLogOne(chkList, strPrice);
-        }catch(Exception e){
-            log.info("Error 발생 ======="+ getClass().getName() +e.getMessage());
-            log.info("Error 발생 getClass ======="+ getClass());
-            log.info("Error 발생 getName ======="+ getClass().getName());
-            log.info("Error 발생 getStackTrace ======="+ Thread.currentThread().getStackTrace()[1].getMethodName());
-            throw  new RuntimeException();
-            }
+            int1 = menuDao.doInsertLogOne(chkList, strPrice);
+
+            int numerator = 1;
+            int denominator = 0;
+            int result = numerator / denominator;
+
+        }catch (Exception e){
+            throw new MyExceptionRuntime(e.getMessage(), getClass().getName());
+        }finally {
+            log.info("==================== Finally ====================");
+            bootlog.doBootLog(getClass().getName());
+        }
+
         return int1;
+
+        // Checked Exception
+        //
+        //        File file = new File("not_existing_file.txt");
+        //        FileInputStream stream
+        //                = new FileInputStream(file);
+        //
+        //            // Unchecked Exception , -> ArithmeticException
+        //            int numerator = 1;
+        //            int denominator = 0;
+        //            int result = numerator / denominator;
+
     }
+    */
+
+
 }

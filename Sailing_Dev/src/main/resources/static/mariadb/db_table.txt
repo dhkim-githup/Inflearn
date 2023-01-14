@@ -63,3 +63,15 @@ CREATE TABLE coffee_menu_log (
 )
 COMMENT='커피로그'
 ;
+
+
+-----------------------------------------------------
+
+CREATE TABLE boot_log (
+	no INT(11) NOT NULL AUTO_INCREMENT,
+	class VARCHAR(500) NULL,
+	reg_day DATETIME NULL  DEFAULT current_timestamp(),
+	PRIMARY KEY (no)
+)
+COMMENT='Spring boot 처리 로그'
+;

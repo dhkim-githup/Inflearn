@@ -21,8 +21,9 @@ class MenuSvcV2Test {
         chkList.add("1");
         chkList.add("2");
 
-        String strPrice = "2222";
+        String strPrice = "5959";
 
         menuSvcV2.doUpdateInsert(chkList, strPrice);
+
     }
 }
