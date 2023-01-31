@@ -1,4 +1,4 @@
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko"  xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -13,13 +13,14 @@
 <body>
 
 <!-- 헤더 위치 -->
-<th:block th:replace="/v2/comm/header :: headerFragment"></th:block>
+<%@ include file="/WEB-INF/views/v2/comm/header.jsp"%>
+
 
 
 <div id="main" style="font-size:large; text-align: center; ">
 
   <div id="search" style="height: 300px;padding: 15px; font-size: small; width: 90%; margin-left: auto;  margin-right: auto;">
-    <h3>[ Coffee menu 등록 <span style="font-size:30px;">&#9749;</span> ] <th:block th:text="${hello}"></th:block>  </h3>
+    <h3>[ Coffee menu 등록 <span style="font-size:30px;">&#9749;</span> ] ${hello} </h3>
 
     <form name="fm_menu_ins" autocomplete="on" action="/v2/menu_ins" method="post">
       <fieldset>
@@ -44,8 +45,9 @@
 
 </div>
 
-<!-- 푸터 위치 -->
-<th:block th:replace="/v2/comm/footer :: footerFragment"></th:block>
+<!--푸터위치-->
+<%@ include file="/WEB-INF/views/v2/comm/footer.jsp"%>
+
 
 </body>
 </html>

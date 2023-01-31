@@ -3,11 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-
     String hello = (String) request.getAttribute("hello");
     List<Cust_info> list = (List<Cust_info>) request.getAttribute("list");
-
-
 %>
 
 <!DOCTYPE html>

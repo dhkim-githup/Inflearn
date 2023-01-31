@@ -30,7 +30,7 @@ public class MemberConV2 {
         log.info(list);
         // Data 송부
         model.addAttribute("list", list);
-        model.addAttribute("hello", " ========== MemberConV2 ======== ");
+        model.addAttribute("hello", " ========== MemberConV2_member ======== ");
 
 
         return "/v2/member/member";
@@ -50,6 +50,7 @@ public class MemberConV2 {
         List<Cust_info> list = memberSvcV2.doSerch(strStartDate,strEndDate, strName );
 
         model.addAttribute("list", list);
+        model.addAttribute("hello", " ========== MemberConV2_member_search ======== ");
 
         return "/v2/member/member";
     }

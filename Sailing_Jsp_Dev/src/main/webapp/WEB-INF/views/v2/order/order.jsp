@@ -1,3 +1,11 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.sailing_jsp_dev.v2.vo.Order_list" %>
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    //String hello = (String) request.getAttribute("hello");
+    List<Order_list> list = (List<Order_list>) request.getAttribute("list");
+%>
 
 <!DOCTYPE html>
 <html lang="ko"  xmlns:th="http://www.thymeleaf.org">
@@ -13,13 +21,12 @@
 <body>
 
 <!-- 헤더 위치 -->
-<th:block th:replace="/v2/comm/header :: headerFragment"></th:block>
-
+<%@ include file="/WEB-INF/views/v2/comm/header.jsp"%>
 
 <div id="main" style="font-size:large; text-align: center; ">
 
     <div id="search" style="height: 150px;padding: 15px; font-size: small; width: 90%; margin-left: auto;  margin-right: auto;">
-        <h3>[ Coffee Order List <span style="font-size:30px;">&#128722;</span> ] <th:block th:text="${hello}"></th:block> </h3>
+        <h3>[ Coffee Order List <span style="font-size:30px;">&#128722;</span> ] ${requestScope.hello} </h3>
 
         <form name="fm_order" autocomplete="on" action="/v2/order_search" method="post">
             <fieldset>
@@ -36,12 +43,9 @@
                 <!-- <a href="javascript:loadDocArray()">test</a> -->
                 <!--        <label>CheckBox : </label><span id="idCheckBox"></span>-->
             </fieldset>
-
         </form>
 
-
     </div>
-
 
     <table class="table">
         <thead>
@@ -57,25 +61,26 @@
         </tr>
         </thead>
 
-
         <tbody id="t_body">
-         <tr class="tr_td" th:each="prod : ${list}">
-            <td><input type="checkbox" name="chkOrderNo" th:value="${prod.getNo()}"></td>
-            <td th:text="${prod.getNo()}">주문번호##</td>
-            <td th:text="${prod.getCoffee_no()}">커피No</td>
-            <td th:text="${prod.getCoffee()}">메뉴명</td>
-            <td th:text="${prod.getPrice()}">가격</td>
-            <td th:text="${prod.getCust_id()}">고객ID</td>
-            <td th:text="${prod.getName()}">고객명</td>
-            <td th:text="${prod.getReg_day()}">주문일자</td>
+
+        <% for(Order_list order_list : list){ %>
+         <tr>
+            <td><input type="checkbox" name="chkOrderNo" value="<%=order_list.getNo()%>"></td>
+            <td><%=order_list.getNo()%></td>
+            <td><%=order_list.getCoffee_no()%></td>
+            <td><%=order_list.getCoffee()%></td>
+            <td><%=order_list.getPrice()%></td>
+            <td><%=order_list.getCust_id()%></td>
+            <td><%=order_list.getName()%></td>
+            <td><%=order_list.getReg_day()%></td>
         </tr>
+        <% } %>
         </tbody>
     </table>
 </div>
 
 <!--푸터위치-->
-<th:block th:replace="/v2/comm/footer :: footerFragment"></th:block>
-
+<%@ include file="/WEB-INF/views/v2/comm/footer.jsp"%>
 
 <script>
     /* 현재 시간 날짜에 적용시키기 */
@@ -87,5 +92,3 @@
 
 </body>
 </html>
-
-
