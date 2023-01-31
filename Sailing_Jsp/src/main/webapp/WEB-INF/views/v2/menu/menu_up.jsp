@@ -1,4 +1,4 @@
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko"  xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -13,7 +13,7 @@
 <body>
 
 <!-- 헤더 위치 -->
-<th:block th:replace="/v2/comm/header :: headerFragment"></th:block>
+<%@include file="/WEB-INF/views/v2/comm/header.jsp"%>
 
 
 <div id="main" style="font-size:large; text-align: center; ">
@@ -25,16 +25,16 @@
       <fieldset>
 
         <legend> [커피 메뉴 등록] </legend>
-        <label>메뉴명</label> <input type="text" id="name" name="coffee" th:value="${map.get('coffee')}"></p>
+        <label>메뉴명</label> <input type="text" id="name" name="coffee" value="${map.get("coffee")}"></p>
         <label>종 류 </label><select name="kind">
-                            <option value="커피" th:selected="${map.get('kind')} == '커피'">커피</option>
-                            <option value="논커피" th:selected="${map.get('kind')} == '논커피'">논커피</option>
-                            <option value="에이드" th:selected="${map.get('kind')} == '에이드'">에이드</option>
+                            <option value="커피" ${map.get("kind")=="커피" ? "selected" : ""}>커피</option>
+                            <option value="논커피" ${map.get("kind")=="논커피" ? "selected" : ""}>논커피</option>
+                            <option value="에이드" ${map.get("kind")=="에이드" ? "selected" : ""}>에이드</option>
                           </select>
                           </p>
         &nbsp;&nbsp;
-        <label>가 격 </label><input type="number" name="price" th:value="${map.get('price')}"></p>
-        <input type="hidden" name="no" th:value="${map.get('no')}">
+        <label>가 격 </label><input type="number" name="price" value="${map.get('price')}"></p>
+        <input type="hidden" name="no" value="${map.get('no')}">
 
         <input type="submit" value="메뉴 수정" style="width: 100px;height: 30px;font-weight: bold; font-size: medium">
       </fieldset>
@@ -45,8 +45,8 @@
 
 </div>
 
-<!-- 푸터 위치 -->
-<th:block th:replace="/v2/comm/footer :: footerFragment"></th:block>
+<!--푸터위치-->
+<%@include file="/WEB-INF/views/v2/comm/footer.jsp"%>
 
 </body>
 </html>

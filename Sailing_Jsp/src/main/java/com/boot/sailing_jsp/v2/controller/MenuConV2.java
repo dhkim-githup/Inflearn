@@ -30,7 +30,7 @@ public class MenuConV2 {
         log.info(list);
         // Data 송부
         model.addAttribute("list", list);
-        model.addAttribute("hello", " ========== MenuCon V2 ======== ");
+        model.addAttribute("hello", " ========== MenuCon V2 Jsp ======== ");
 
         return "/v2/menu/menu";
     }

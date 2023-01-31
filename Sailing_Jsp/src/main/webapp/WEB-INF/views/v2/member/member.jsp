@@ -1,4 +1,10 @@
-
+<%@ page import="com.boot.sailing_jsp.v2.vo.Cust_info" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String hello = (String) request.getAttribute("hello");
+    List<Cust_info> list = (List<Cust_info>) request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,13 +19,12 @@
 <body>
 
 <!-- 헤더 위치 -->
-<th:block th:replace="/v2/comm/header :: headerFragment"></th:block>
-
+<%@include file="/WEB-INF/views/v2/comm/header.jsp"%>
 
 <div id="main" style="font-size:large; text-align: center; ">
 
     <div id="search" style="height: 150px;padding: 15px; font-size: small; width: 90%; margin-left: auto;  margin-right: auto;">
-        <h3>[ Member Info <span style="font-size:30px;">&#128699;</span> ] <th:block th:text="${hello}"></th:block></h3>
+        <h3>[ Member Info <span style="font-size:30px;">&#128699;</span> ] <%=hello%></h3>
 
         <form name="fm_member" autocomplete="on" action="/v2/member_search" method="post">
             <fieldset>
@@ -52,24 +57,23 @@
         </tr>
         </thead>
 
-
         <tbody id="t_body">
-
-
-        <tr class="tr_td" th:each="prod : ${list}">
-            <td><input type="checkbox" name="chkMemberNo" th:value="${prod.getNo()}"></td>
-            <th th:text="${prod.getCust_id()}">고객ID</th>
-            <td th:text="${prod.getName()}">고객명</td>
-            <td th:text="${prod.getEmail()}">이메일</td>
-            <td th:text="${prod.getRole()}">권한</td>
-            <td th:text="${prod.getReg_day()}">등록일</td>
+        <% for(Cust_info custInfo : list){ %>
+        <tr class="tr_td">
+            <td><input type="checkbox" name="chkMemberNo" value="<%=custInfo.getNo()%>"></td>
+            <th><%=custInfo.getCust_id()%></th>
+            <td><%=custInfo.getName()%></td>
+            <td><%=custInfo.getEmail()%></td>
+            <td><%=custInfo.getRole()%></td>
+            <td><%=custInfo.getReg_day()%></td>
         </tr>
+        <% } %>
         </tbody>
     </table>
 </div>
 
 <!--푸터위치-->
-<th:block th:replace="/v2/comm/footer :: footerFragment"></th:block>
+<%@include file="/WEB-INF/views/v2/comm/footer.jsp"%>
 
 <script>
     /* 현재 시간 날짜에 적용시키기 */
