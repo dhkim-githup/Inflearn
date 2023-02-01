@@ -7,7 +7,7 @@
     <!-- 메뉴 조회 -->
     <select id="doList" resultType="com.example.sailing_jsp_dev.v2.vo.Cust_info">
         SELECT no, cust_id, name, email, role,
-               DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day
+               to_char(reg_day,'yyyy.mm.dd') AS reg_day
         FROM cust_info
     </select>
 
@@ -19,13 +19,14 @@
     <!-- 검색에 의한 쿼리 -->
     <select id="doSerch" resultType="com.example.sailing_jsp_dev.v2.vo.Cust_info">
         SELECT no, cust_id, name, email, role,
-        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day
+        to_char(reg_day,'yyyy.mm.dd')  AS reg_day
         FROM cust_info
         WHERE 1=1
-        AND reg_day >= DATE_FORMAT( #{strStartDate},'%Y%m%d')
-        AND reg_day &lt; DATE_ADD(DATE_FORMAT(#{strEndDate},'%Y%m%d'), INTERVAL +1 DAY)
+        AND reg_day >= to_date(#{strStartDate},'yyyy-mm-dd')
+        AND reg_day &lt; to_date(#{strEndDate},'yyyy-mm-dd')+1
         <if test="strName != 'ALL'">
-            AND name like CONCAT(#{strName},'%')
+            AND name like '%' || #{strName} || '%'
+<!--            AND name like #{strName} || '%'-->
         </if>
     </select>
 
