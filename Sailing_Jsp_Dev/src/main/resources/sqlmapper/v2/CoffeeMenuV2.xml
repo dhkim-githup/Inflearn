@@ -7,9 +7,10 @@
     <!-- 메뉴 조회 -->
     <select id="doList" resultType="com.example.sailing_jsp_dev.v2.vo.Coffee_menu">
         SELECT no, coffee, kind, price,
-        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
-        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+        to_char(reg_day,'yyyy.mm.dd') AS reg_day,
+        to_char(mod_day,'yyyy.mm.dd') AS mod_day
         FROM coffee_menu
+        ORDER BY no
     </select>
 
     <!--
@@ -20,32 +21,35 @@
     <!-- 검색에 의한 쿼리 -->
     <select id="doSerch" resultType="com.example.sailing_jsp_dev.v2.vo.Coffee_menu">
         SELECT no, coffee, kind, price,
-            DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
-            DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+                to_char(reg_day,'yyyy.mm.dd') AS reg_day,
+                to_char(mod_day,'yyyy.mm.dd') AS mod_day
         FROM coffee_menu
         WHERE 1=1
-        AND reg_day >= DATE_FORMAT( #{strStartDate},'%Y%m%d')
-        AND reg_day &lt; DATE_ADD(DATE_FORMAT(#{strEndDate},'%Y%m%d'), INTERVAL +1 DAY)
+        AND reg_day >= to_date(#{strStartDate},'yyyy-mm-dd')
+        AND reg_day &lt; to_date(#{strEndDate},'yyyy-mm-dd')+1
         <if test="strCoffee != 'ALL'">
-            AND coffee like CONCAT(#{strCoffee},'%')
+            <!--            AND coffee like CONCAT(#{strCoffee},'%')-->
+            AND coffee like '%' || #{strCoffee} ||'%'
         </if>
         <if test="strKind != 'ALL'">
             AND kind = #{strKind}
         </if>
+        ORDER BY no
     </select>
 
     <!-- 메뉴 조회 - One row -->
     <select id="doListOne" resultType="map">
-        SELECT no, coffee, kind, price,
-        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
-        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+        SELECT NO, COFFEE, KIND, PRICE,
+        TO_CHAR(REG_DAY,'YYYY.MM.DD') AS REG_DAY,
+        TO_CHAR(MOD_DAY,'YYYY.MM.DD') AS MOD_DAY
         FROM coffee_menu
-        Where no = CAST(#{strNo} as INTEGER)
+        Where no = to_number(#{strNo})
+        <!--        Where no = CAST(#{strNo} as INTEGER)-->
     </select>
 
     <insert id="doInsert">
         INSERT INTO coffee_menu (coffee, kind, price)
-        VALUES(#{coffee},#{kind},CAST(#{price} as INTEGER))
+        VALUES(#{coffee},#{kind},to_number(#{price}))
     </insert>
 
     <update id="doUpdate">
@@ -53,27 +57,27 @@
         Set
             coffee = #{coffee},
             kind = #{kind},
-            price = CAST(#{price} as INTEGER)
-        Where no = CAST(#{no} as INTEGER)
+            price = to_number(#{price})
+        Where no = to_number(#{no})
     </update>
 
     <!-- 삭제처리 -->
     <delete id="doDelete">
         Delete from coffee_menu
-        Where no = CAST(#{strNo} as INTEGER)
+        Where no = to_number(#{strNo})
     </delete>
 
     <!-- 메뉴 가격 수정  -->
     <update id="doUpdatePrice">
         Update coffee_menu set
-        price = CAST(#{strPrice} as INTEGER)
-        Where no = CAST(#{strNo} as INTEGER)
+        price = to_number(#{strPrice})
+        Where no = to_number(#{strNo})
     </update>
 
     <!-- 가격 로그입력 -->
     <insert id="doInsertLog">
         INSERT INTO coffee_menu_log (coffee_no, price)
-        VALUES ( #{strNo}, CAST(#{strPrice} as INTEGER) )
+        VALUES ( #{strNo}, to_number(#{strPrice}))
     </insert>
 
     <!-- 메뉴 가격 수정 원쿼리  -->
@@ -91,7 +95,7 @@
     <insert id="doInsertLogOne">
         INSERT INTO coffee_menu_log (coffee_no, price)
         <foreach item="item" index="index" collection="chkList"  separator=" UNION ALL "  nullable="true">
-            SELECT #{item},  CAST(#{strPrice} as INTEGER) FROM DUAL
+            SELECT #{item},  to_number(#{strPrice}) FROM DUAL
         </foreach>
     </insert>
 

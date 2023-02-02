@@ -64,6 +64,7 @@ public class MenuConV2 {
                            @RequestParam("no") String strNo){
 
         Map<String , Object> map = menuSvc.doListOne(strNo);
+        log.info("map ==================> "+map);
         model.addAttribute("map", map);
 
         return "/v2/menu/menu_up";

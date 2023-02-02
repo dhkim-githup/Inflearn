@@ -9,6 +9,7 @@
         SELECT no, coffee_no, coffee, price, cust_id, name,
                to_char(reg_day,'yyyy.mm.dd') AS reg_day
         FROM order_list
+        ORDER BY coffee_no
     </select>
 
     <!--
@@ -30,6 +31,7 @@
         <if test="strName != 'ALL'">
             AND name like '%' || #{strName} ||'%'
         </if>
+        ORDER BY coffee_no
     </select>
 
 </mapper>
