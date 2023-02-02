@@ -1,0 +1,164 @@
+--drop table coffee_menu;
+--drop table cust_info;
+--drop table order_list;
+--drop table coffee_menu_log;
+--drop table boot_log;
+
+-- coffee_menu 테이블 생성
+
+CREATE TABLE coffee_menu (
+ no number GENERATED AS IDENTITY ,
+ coffee VARCHAR2(100) NOT NULL ,
+ kind VARCHAR2(100) NOT NULL ,
+ price number(11) DEFAULT 0 NOT NULL,
+ reg_day date DEFAULT sysdate NOT NULL ,
+ mod_day date DEFAULT sysdate NOT NULL ,
+ CONSTRAINT pk_coffee_menu PRIMARY KEY(no)
+)
+;
+
+COMMENT ON TABLE coffee_menu IS '커피/음료 메뉴';
+
+-----------------------------------------------------
+
+CREATE TABLE cust_info (
+ no number GENERATED AS IDENTITY ,
+ cust_id VARCHAR2(100) NOT NULL,
+ name VARCHAR2(100) NOT NULL,
+ email VARCHAR2(100) NOT NULL,
+ role VARCHAR2(100) DEFAULT 'MEMBER' NOT NULL  ,
+ reg_day date default sysdate NOT NULL,
+ CONSTRAINT pk_cust_info PRIMARY KEY(no)
+);
+
+
+COMMENT ON TABLE cust_info IS '고객정보';
+
+-- unique index 생성
+
+ALTER TABLE cust_info ADD CONSTRAINT idx_cust_info UNIQUE(cust_id);
+
+-----------------------------------------------------
+
+CREATE TABLE order_list (
+ no number GENERATED AS IDENTITY ,
+ coffee_no number(11) NOT NULL,
+ coffee VARCHAR2(100) NOT NULL,
+ price number(11) NOT NULL,
+ cust_id VARCHAR2(100) NOT NULL,
+ name VARCHAR2(100) NOT NULL,
+ reg_day date default sysdate ,
+ CONSTRAINT pk_order_list PRIMARY KEY(no)
+);
+
+
+COMMENT ON TABLE order_list IS '주문내역';
+
+-- foreign key 생성
+
+ALTER TABLE order_list
+ADD CONSTRAINT fk_coffee_no
+FOREIGN KEY (coffee_no)
+REFERENCES coffee_menu(no);
+
+ALTER TABLE order_list
+ADD CONSTRAINT fk_cust_id
+FOREIGN KEY (cust_id)
+REFERENCES cust_info(cust_id);
+
+
+-----------------------------------------------------
+
+CREATE TABLE coffee_menu_log (
+ no number GENERATED AS IDENTITY ,
+ coffee_no number(11) DEFAULT '0',
+ price number(11) DEFAULT '0',
+ reg_day date default sysdate,
+ CONSTRAINT pk_coffee_menu_log PRIMARY KEY (no)
+);
+
+COMMENT ON TABLE coffee_menu_log IS '커피로그';
+
+-----------------------------------------------------
+
+CREATE TABLE boot_log (
+ no number GENERATED AS IDENTITY ,
+ class VARCHAR2(500) NULL,
+ reg_day date default sysdate ,
+ CONSTRAINT pk_boot_log PRIMARY KEY (no)
+);
+
+
+COMMENT ON TABLE boot_log IS 'Spring boot 처리 로그';
+
+--------------------------
+
+INSERT INTO coffee_menu (coffee, kind, price)
+VALUES ('아메리카노','커피',2000);
+
+INSERT INTO coffee_menu (coffee, kind, price)
+VALUES ('카페라떼','커피',3000);
+
+INSERT INTO coffee_menu (coffee, kind, price)
+VALUES ('카푸치노','커피',3000);
+
+INSERT INTO coffee_menu (coffee, kind, price)
+VALUES ('그린티','논커피',3500);
+
+INSERT INTO coffee_menu (coffee, kind, price)
+VALUES ('초코라떼','논커피',4000);
+
+INSERT INTO coffee_menu (coffee, kind, price)
+VALUES ('파인애플','에이드',3000);
+
+INSERT INTO coffee_menu (coffee, kind, price)
+VALUES ('제주한라봉','에이드',3000);
+
+INSERT INTO coffee_menu (coffee, kind, price)
+VALUES ('오렌지','에이드',3000);
+
+-------------------------------------
+
+INSERT INTO cust_info(cust_id,NAME,email,role)
+VALUES('ID1','홍길동','email1@hong.com','MEMBER');
+
+INSERT INTO cust_info(cust_id,NAME,email,role)
+VALUES('ID2','홍길성','email2@hong.com','MEMBER');
+
+INSERT INTO cust_info(cust_id,NAME,email,role)
+VALUES('ID3','홍길자','email3@hong.com','MEMBER');
+
+INSERT INTO cust_info(cust_id,NAME,email,role)
+VALUES('ID4','홍길순','email4@hong.com','MEMBER');
+
+INSERT INTO cust_info(cust_id,NAME,email,role)
+VALUES('ID5','홍길선','email5@hong.com','MEMBER');
+
+INSERT INTO cust_info(cust_id,NAME,email,role)
+VALUES('ID6','관리자','admin@hong.com','ADMIN');
+
+--------------------------------------
+
+INSERT INTO order_list (coffee_no,coffee,price,cust_id,NAME)
+VALUES(1,'아메리카노',2000,'ID1','홍길동');
+
+INSERT INTO order_list (coffee_no,coffee,price,cust_id,NAME)
+VALUES(1,'아메리카노',2000,'ID2','홍길성');
+
+INSERT INTO order_list (coffee_no,coffee,price,cust_id,NAME)
+VALUES(3,'카푸치노',3000,'ID3','홍길자');
+
+INSERT INTO order_list (coffee_no,coffee,price,cust_id,NAME)
+VALUES(3,'카푸치노',3000,'ID3','홍길자');
+
+INSERT INTO order_list (coffee_no,coffee,price,cust_id,NAME)
+VALUES(5,'초코라떼',4000,'ID4','홍길순');
+
+INSERT INTO order_list (coffee_no,coffee,price,cust_id,NAME)
+VALUES(8,'오렌지',3000,'ID2','홍길성');
+
+INSERT INTO order_list (coffee_no,coffee,price,cust_id,NAME)
+VALUES(4,'그린티',3500,'ID3','홍길자');
+
+INSERT INTO order_list (coffee_no,coffee,price,cust_id,NAME)
+VALUES(2,'카페라떼',3000,'ID5','홍길선');
