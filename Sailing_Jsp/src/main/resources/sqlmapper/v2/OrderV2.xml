@@ -7,8 +7,8 @@
     <!-- 메뉴 조회 -->
     <select id="doList" resultType="com.boot.sailing_jsp.v2.vo.Order_list">
         SELECT no, coffee_no, coffee, price, cust_id, name,
-        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day
-        FROM order_list;
+              to_char(reg_day,'yyyy.mm.dd') AS reg_day
+        FROM order_list
     </select>
 
     <!--
@@ -19,16 +19,16 @@
     <!-- 검색에 의한 쿼리 -->
     <select id="doSerch" resultType="com.boot.sailing_jsp.v2.vo.Order_list">
         SELECT no, coffee_no, coffee, price, cust_id, name,
-        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day
+              to_char(reg_day,'yyyy.mm.dd') AS reg_day
         FROM order_list
         WHERE 1=1
-        AND reg_day >= DATE_FORMAT( #{strStartDate},'%Y%m%d')
-        AND reg_day &lt; DATE_ADD(DATE_FORMAT(#{strEndDate},'%Y%m%d'), INTERVAL +1 DAY)
+        AND reg_day >= to_date( #{strStartDate},'yyyy-mm-dd')
+        AND reg_day &lt;  to_date( #{strEndDate},'yyyy-mm-dd') +1
         <if test="strCoffee != 'ALL'">
-            AND coffee like CONCAT(#{strCoffee},'%')
+            AND coffee like #{strCoffee} ||'%'
         </if>
         <if test="strName != 'ALL'">
-            AND name like CONCAT(#{strName},'%')
+            AND name like  '%' || #{strName} ||'%'
         </if>
     </select>
 

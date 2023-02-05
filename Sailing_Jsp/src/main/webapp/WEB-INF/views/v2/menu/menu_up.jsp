@@ -25,16 +25,16 @@
       <fieldset>
 
         <legend> [커피 메뉴 등록] </legend>
-        <label>메뉴명</label> <input type="text" id="name" name="coffee" value="${map.get("coffee")}"></p>
+        <label>메뉴명</label> <input type="text" id="name" name="coffee" value="${map.get("COFFEE")}"></p>
         <label>종 류 </label><select name="kind">
-                            <option value="커피" ${map.get("kind")=="커피" ? "selected" : ""}>커피</option>
-                            <option value="논커피" ${map.get("kind")=="논커피" ? "selected" : ""}>논커피</option>
-                            <option value="에이드" ${map.get("kind")=="에이드" ? "selected" : ""}>에이드</option>
+                            <option value="커피" ${map.get("KIND")=="커피" ? "selected" : ""}>커피</option>
+                            <option value="논커피" ${map.get("KIND")=="논커피" ? "selected" : ""}>논커피</option>
+                            <option value="에이드" ${map.get("KIND")=="에이드" ? "selected" : ""}>에이드</option>
                           </select>
                           </p>
         &nbsp;&nbsp;
-        <label>가 격 </label><input type="number" name="price" value="${map.get('price')}"></p>
-        <input type="hidden" name="no" value="${map.get('no')}">
+        <label>가 격 </label><input type="number" name="price" value="${map.get('PRICE')}"></p>
+        <input type="hidden" name="no" value="${map.get('NO')}">
 
         <input type="submit" value="메뉴 수정" style="width: 100px;height: 30px;font-weight: bold; font-size: medium">
       </fieldset>

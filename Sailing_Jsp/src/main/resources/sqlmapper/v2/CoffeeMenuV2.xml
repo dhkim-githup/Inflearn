@@ -7,8 +7,8 @@
     <!-- 메뉴 조회 -->
     <select id="doList" resultType="com.boot.sailing_jsp.v2.vo.Coffee_menu">
         SELECT no, coffee, kind, price,
-        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
-        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+        to_char(reg_day,'yyyy.mm.dd') AS reg_day,
+        to_char(mod_day,'yyyy.mm.dd') AS mod_day
         FROM coffee_menu
     </select>
 
@@ -20,14 +20,14 @@
     <!-- 검색에 의한 쿼리 -->
     <select id="doSerch" resultType="com.boot.sailing_jsp.v2.vo.Coffee_menu">
         SELECT no, coffee, kind, price,
-            DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
-            DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+                to_char(reg_day,'yyyy.mm.dd') AS reg_day,
+                to_char(mod_day,'yyyy.mm.dd') AS mod_day
         FROM coffee_menu
         WHERE 1=1
-        AND reg_day >= DATE_FORMAT( #{strStartDate},'%Y%m%d')
-        AND reg_day &lt; DATE_ADD(DATE_FORMAT(#{strEndDate},'%Y%m%d'), INTERVAL +1 DAY)
+        AND reg_day >= to_date( #{strStartDate},'yyyy-mm-dd')
+        AND reg_day &lt;  to_date( #{strEndDate},'yyyy-mm-dd') +1
         <if test="strCoffee != 'ALL'">
-            AND coffee like CONCAT(#{strCoffee},'%')
+            AND coffee like #{strCoffee}||'%'
         </if>
         <if test="strKind != 'ALL'">
             AND kind = #{strKind}
@@ -37,8 +37,8 @@
     <!-- 메뉴 조회 - One row -->
     <select id="doListOne" resultType="map">
         SELECT no, coffee, kind, price,
-        DATE_FORMAT(reg_day,'%Y.%m.%d') AS reg_day,
-        DATE_FORMAT(mod_day,'%Y.%m.%d') AS mod_day
+        to_char(reg_day,'yyyy.mm.dd') AS reg_day,
+        to_char(mod_day,'yyyy.mm.dd') AS mod_day
         FROM coffee_menu
         Where no = CAST(#{strNo} as INTEGER)
     </select>
