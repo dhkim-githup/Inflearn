@@ -1,0 +1,13 @@
+-- 12C 버전부터 c## 이 생겨서, 이전 버전과 같이 사용하고자 아래 구문 실행 
+-- 자세한 내용은 - 구글링으로 아래 에러 검색 
+-- ORA-65096: 공통 사용자 또는 롤 이름이 부적합합니다.
+ALTER SESSION SET "_ORACLE_SCRIPT"=true;
+
+-- 이유는 모르겠지만, 첫번째 계정으로 scott / tiger 를 만들어야 할것 같은..
+create user OCHOBO identified by ORINE;
+
+-- 접속 권한 부여
+grant connect, resource to OCHOBO;
+
+-- 테이블스페이스 사용 권한 부여
+alter user OCHOBO quota unlimited on users;
