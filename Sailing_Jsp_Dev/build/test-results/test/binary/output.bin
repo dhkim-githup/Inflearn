@@ -1,0 +1,21 @@
+4===============================================111
+4===============================================222
+4===============================================333
+p17:42:55.469 [Test worker] DEBUG org.mariadb.jdbc.client.impl.StandardClient - execute query: set autocommit=0
+w17:42:55.473 [Test worker] DEBUG org.mariadb.jdbc.message.server.OkPacket - System variable change:  autocommit = OFF
+Connection Success
+1===============================================
+select * from coffee_menu
+y17:42:55.479 [Test worker] DEBUG org.mariadb.jdbc.client.impl.StandardClient - execute query: select * from coffee_menu
+5Name : 아메리카노, kind : 커피, price : 5000 
+2Name : 카페라떼, kind : 커피, price : 5000 
+2Name : 카푸치노, kind : 커피, price : 3000 
+2Name : 그린티, kind : 논커피, price : 3500 
+5Name : 초코라떼, kind : 논커피, price : 4000 
+5Name : 파인애플, kind : 에이드, price : 3000 
+8Name : 제주한라봉, kind : 에이드, price : 3000 
+2Name : 오렌지, kind : 에이드, price : 3000 
+1===============================================
+�17:42:55.483 [Test worker] DEBUG org.mariadb.jdbc.client.impl.StandardClient - execute query: insert into coffee_menu_log(coffee_no, price) values (1234, 9876)
+�17:42:55.484 [Test worker] WARN org.mariadb.jdbc.message.server.ErrorPacket - Error: 1146-42S02: Table 'boot.coffee_menu_log' doesn't exist
+ESqlException :(conn=244) Table 'boot.coffee_menu_log' doesn't exist

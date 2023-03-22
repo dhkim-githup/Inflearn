@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.sailing_jsp_dev.v2.dao.MenuDaoV2">
+    <!-- 메뉴 조회 -->
+    <select id="doList" resultType="com.example.sailing_jsp_dev.v2.vo.Coffee_menu">
+        SELECT no, coffee, kind, price,
+        to_char(reg_day,'yyyy.mm.dd') AS reg_day,
+        to_char(mod_day,'yyyy.mm.dd') AS mod_day
+        FROM coffee_menu
+        ORDER BY no
+    </select>
+
+    <!--
+        <![CDATA[   ]]>   : xml 파싱에 관여하지 않도록 처리
+        <  	&lt;
+        >	&gt;
+    -->
+    <!-- 검색에 의한 쿼리 -->
+    <select id="doSerch" resultType="com.example.sailing_jsp_dev.v2.vo.Coffee_menu">
+        SELECT no, coffee, kind, price,
+                to_char(reg_day,'yyyy.mm.dd') AS reg_day,
+                to_char(mod_day,'yyyy.mm.dd') AS mod_day
+        FROM coffee_menu
+        WHERE 1=1
+        AND reg_day >= to_date(#{strStartDate},'yyyy-mm-dd')
+        AND reg_day &lt; to_date(#{strEndDate},'yyyy-mm-dd')+1
+        <if test="strCoffee != 'ALL'">
+            <!--            AND coffee like CONCAT(#{strCoffee},'%')-->
+            AND coffee like '%' || #{strCoffee} ||'%'
+        </if>
+        <if test="strKind != 'ALL'">
+            AND kind = #{strKind}
+        </if>
+        ORDER BY no
+    </select>
+
+    <!-- 메뉴 조회 - One row -->
+    <select id="doListOne" resultType="map">
+        SELECT NO, COFFEE, KIND, PRICE,
+        TO_CHAR(REG_DAY,'YYYY.MM.DD') AS REG_DAY,
+        TO_CHAR(MOD_DAY,'YYYY.MM.DD') AS MOD_DAY
+        FROM coffee_menu
+        Where no = to_number(#{strNo})
+        <!--        Where no = CAST(#{strNo} as INTEGER)-->
+    </select>
+
+    <insert id="doInsert">
+        INSERT INTO coffee_menu (coffee, kind, price)
+        VALUES(#{coffee},#{kind},to_number(#{price}))
+    </insert>
+
+    <update id="doUpdate">
+        Update coffee_menu
+        Set
+            coffee = #{coffee},
+            kind = #{kind},
+            price = to_number(#{price})
+        Where no = to_number(#{no})
+    </update>
+
+    <!-- 삭제처리 -->
+    <delete id="doDelete">
+        Delete from coffee_menu
+        Where no = to_number(#{strNo})
+    </delete>
+
+    <!-- 메뉴 가격 수정  -->
+    <update id="doUpdatePrice">
+        Update coffee_menu set
+        price = to_number(#{strPrice})
+        Where no = to_number(#{strNo})
+    </update>
+
+    <!-- 가격 로그입력 -->
+    <insert id="doInsertLog">
+        INSERT INTO coffee_menu_log (coffee_no, price)
+        VALUES ( #{strNo}, to_number(#{strPrice}))
+    </insert>
+
+    <!-- 메뉴 가격 수정 원쿼리  -->
+    <update id="doUpdatePriceOne">
+        Update coffee_menu set
+        price = CAST(#{strPrice} as INTEGER)
+        <where>
+            <foreach item="item" index="index" collection="chkList" open="no in (" separator="," close=")" nullable="true">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+    <!-- 가격 로그입력 원쿼리 -->
+    <insert id="doInsertLogOne">
+        INSERT INTO coffee_menu_log (coffee_no, price)
+        <foreach item="item" index="index" collection="chkList"  separator=" UNION ALL "  nullable="true">
+            SELECT #{item},  to_number(#{strPrice}) FROM DUAL
+        </foreach>
+    </insert>
+
+    <!-- boot log 입력 -->
+    <insert id="doBootLog">
+        INSERT INTO boot_log (class)
+        VALUES ( #{strClass})
+    </insert>
+
+</mapper>

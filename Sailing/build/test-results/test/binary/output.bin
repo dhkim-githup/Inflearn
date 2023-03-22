@@ -1,0 +1,25 @@
+_11:09:14.842 [Test worker] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization...
+p11:09:14.845 [Test worker] DEBUG log4jdbc.debug - Using logger: net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+`11:09:14.845 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.debug.stack.prefix is not defined
+f11:09:14.845 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.warn.threshold is not defined
+g11:09:14.845 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.sqltiming.error.threshold is not defined
+Å11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.dump.booleanastruefalse is not defined (using default value false)
+Y11:09:14.846 [Test worker] DEBUG log4jdbc.debug -   log4jdbc.dump.sql.maxlinelength = 0
+Ç11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.dump.fulldebugstacktrace is not defined (using default value false)
+x11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.statement.warn is not defined (using default value false)
+x11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.select is not defined (using default value true)
+x11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.insert is not defined (using default value true)
+x11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.update is not defined (using default value true)
+x11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.delete is not defined (using default value true)
+x11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.create is not defined (using default value true)
+11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.dump.sql.addsemicolon is not defined (using default value false)
+Ç11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.auto.load.popular.drivers is not defined (using default value true)
+U11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.drivers is not defined
+q11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.trim.sql is not defined (using default value true)
+Å11:09:14.846 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.trim.sql.extrablanklines is not defined (using default value true)
+ã11:09:14.847 [Test worker] DEBUG log4jdbc.debug - x log4jdbc.suppress.generated.keys.exception is not defined (using default value false)
+b11:09:14.847 [Test worker] DEBUG log4jdbc.debug - log4jdbc-logj2 properties initialization done.
+N11:09:14.847 [Test worker] DEBUG log4jdbc.debug - DriverSpy intialization...
+q11:09:14.849 [Test worker] DEBUG log4jdbc.debug - WARNING!  log4jdbc couldn't find any underlying jdbc drivers.
+Q11:09:14.850 [Test worker] DEBUG log4jdbc.debug - DriverSpy intialization done.
+null
