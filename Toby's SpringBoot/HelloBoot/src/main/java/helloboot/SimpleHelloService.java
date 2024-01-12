@@ -1,8 +1,12 @@
 package helloboot;
 
-public class SimpleHelloService {
+import org.springframework.stereotype.Service;
 
-    String sayHello(String name){
-        return "say Hello "+name;
+@Service
+public class SimpleHelloService implements HelloService {
+
+    @Override
+    public String sayHello(String name){
+        return "Simple say Hello "+name;
     }
 }
