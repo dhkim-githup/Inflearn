@@ -3,11 +3,19 @@ package com.example.security.config;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
@@ -21,11 +29,16 @@ public class SecurityConfig {
     }
 
     @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/","/login","/join","/joinProc").permitAll()
+                        .requestMatchers("/","/login","/join").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated()
@@ -39,31 +52,64 @@ public class SecurityConfig {
                 );
 
         http
-                .sessionManagement((auth) -> auth
-                .maximumSessions(1) // 하나의 아이디에 대한 다중 로그인 허용 개수
-                .maxSessionsPreventsLogin(true))// 다중 로그인 개수를 초과하였을 경우 처리 방법- true : 초과시 새로운 로그인 차단- false : 초과시 기존 세션 하나 삭제
-                ;
-
-        http
-                .sessionManagement((auth) -> auth
-                .sessionFixation().changeSessionId()); //
+                .csrf((auth) -> auth.disable());
 
         //http
-          //      .csrf((auth) -> auth.disable());
+          //      .httpBasic(Customizer.withDefaults());
 
+
+        http
+                .sessionManagement((session) -> session
+                .maximumSessions(1) // 하나의 아이디에 대한 다중 로그인 허용 개수
+                .maxSessionsPreventsLogin(true) // 다중 로그인 개수를 초과하였을 경우 처리 방법- true : 초과시 새로운 로그인 차단- false : 초과시 기존 세션 하나 삭제
+                );
+
+        http
+                .sessionManagement((session) -> session
+                .sessionFixation().changeSessionId()); //
+
+        http
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                );
 
         return http.build();
     }
 
-    /* 동시성 이슈
-    @Bean
-    public SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
-    }// Register HttpSessionEventPublisher
 
+
+    /* InMemory 방식 사용
     @Bean
-    public static ServletListenerRegistrationBean httpSessionEventPublisher() {
-        return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
+    public UserDetailsService userDetailsService() {
+
+        UserDetails user1 = User.builder()
+                .username("user1")
+                .password(bCryptPasswordEncoder().encode("1234"))
+                .roles("ADMIN")
+                .build();
+
+        UserDetails user2 = User.builder()
+                .username("user2")
+                .password(bCryptPasswordEncoder().encode("1234"))
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user1, user2);
+    }
+
+    */
+
+    /* Role Hierarchy (계층 권한)
+    @Bean
+    public RoleHierarchy roleHierarchy() {
+
+        RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
+
+        hierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER \n" +
+                "ROLE_B > ROLE_A");
+
+        return hierarchy;
     }
     */
+
 }
