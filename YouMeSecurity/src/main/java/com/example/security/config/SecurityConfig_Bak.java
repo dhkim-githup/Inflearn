@@ -1,37 +1,21 @@
 package com.example.security.config;
 
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
+//@Configuration
+//@EnableWebSecurity
+public class SecurityConfig_Bak {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public HttpSessionEventPublisher httpSessionEventPublisher() {
-        return new HttpSessionEventPublisher();
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -60,22 +44,20 @@ public class SecurityConfig {
 
         http
                 .sessionManagement((session) -> session
+                .sessionFixation().changeSessionId()
                 .maximumSessions(1) // 하나의 아이디에 대한 다중 로그인 허용 개수
                 .maxSessionsPreventsLogin(true) // 다중 로그인 개수를 초과하였을 경우 처리 방법- true : 초과시 새로운 로그인 차단- false : 초과시 기존 세션 하나 삭제
                 );
 
-        http
-                .sessionManagement((session) -> session
-                .sessionFixation().changeSessionId()); //
-
+        /*
         http
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 );
+        */
 
         return http.build();
     }
-
 
 
     /* InMemory 방식 사용
