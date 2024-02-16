@@ -24,13 +24,13 @@
             <tbody>
             <tr th:each="prod : ${board}">
                 <th scope="row" th:text="${prod.getId()}">1</th>
-                <td th:text="${prod.getTitle()}">Mark</td>
+                <td><a th:text="${prod.getTitle()}" th:href="@{/board/form(id=${prod.getId()})}">Mark</a></td>
                 <td>홍길동</td>
             </tr>
             </tbody>
         </table>
         <div class="text-end">
-        <button type="button" class="btn btn-primary">쓰기</button>
+        <a type="button" class="btn btn-primary" th:href="@{/board/form}">쓰기</a>
         </div>
     </div>
 
