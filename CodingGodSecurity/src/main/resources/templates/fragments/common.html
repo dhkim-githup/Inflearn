@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head(title)">
   <meta charset="utf-8">
@@ -33,10 +33,15 @@
           <!--          <a class="nav-link disabled" aria-disabled="true">Disabled</a>-->
           <!--        </li>-->
         </ul>
-        <!--      <form class="d-flex" role="search">-->
-        <!--        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-        <!--        <button class="btn btn-outline-success" type="submit">Search</button>-->
-        <!--      </form>-->
+        <a class="btn btn-outline-success" type="submit" th:href="@{/account/login}" sec:authorize="!isAuthenticated()">Login</a>
+        <a class="btn btn-outline-success" type="submit" th:href="@{/account/register}" sec:authorize="!isAuthenticated()">회원가입</a>
+
+              <form class="d-flex" role="search" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+                <span class="text-white" sec:authentication="name">사용자</span>
+                <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>
+              <!--<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+              <button class="btn btn-outline-success" type="submit">Logout</button>
+        </form>
       </div>
     </div>
   </nav>
