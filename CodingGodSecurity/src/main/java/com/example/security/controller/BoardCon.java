@@ -2,6 +2,7 @@ package com.example.security.controller;
 
 import com.example.security.model.Board;
 import com.example.security.repository.BoardRepo;
+import com.example.security.service.BoardService;
 import com.example.security.validator.BoardValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,9 @@ public class BoardCon {
 
     @Autowired
     private BoardRepo boardRepo;
+
+    @Autowired
+    private BoardService boardService;
 
     @GetMapping("/list")
     public String doList(Model model,
@@ -62,14 +68,17 @@ public class BoardCon {
     }
 
     @PostMapping("/form")
-    public String greetingSubmit(@Valid Board board, BindingResult bindingResult) {
+    public String greetingSubmit(@Valid Board board, BindingResult bindingResult, Authentication authentication) {
 
         boardValidator.validate(board, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "board/form";
         }
-        boardRepo.save(board);
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        boardService.doSave(username, board);
+        //boardRepo.save(board);
 
         return "redirect:/board/list";
     }

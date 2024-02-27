@@ -30,14 +30,14 @@
             <tr>
                 <th scope="col">번호</th>
                 <th scope="col">제목</th>
-                <th scope="col">홍길동</th>
+                <th scope="col">작성자</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="prod : ${board}">
                 <th scope="row" th:text="${prod.getId()}">1</th>
                 <td><a th:text="${prod.getTitle()}" th:href="@{/board/form(id=${prod.getId()})}">Mark</a></td>
-                <td>홍길동</td>
+                <td th:text="${prod.user.getUsername()}">홍길동</td>
             </tr>
             </tbody>
         </table>

@@ -23,7 +23,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/","/css/**","/account/register").permitAll()
+                        .requestMatchers("/","/css/**","/account/register","/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -31,6 +31,10 @@ public class WebSecurityConfig {
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());
+
+        http
+                .csrf(csrf -> csrf.disable())
+                ;
 
         return http.build();
     }
