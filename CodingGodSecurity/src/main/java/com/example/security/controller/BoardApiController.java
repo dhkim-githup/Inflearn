@@ -3,6 +3,7 @@ package com.example.security.controller;
 import com.example.security.model.Board;
 import com.example.security.repository.BoardRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
@@ -52,6 +53,7 @@ class BoardApiController {
                 });
     }
 
+    @Secured("ROLE_ADMIN") // ROLE_ADMIN 만 접근 가능 , MethodSecurityConfig 영향을 받음
     @DeleteMapping("/boards/{id}")
     void deleteBoard(@PathVariable Long id) {
         repository.deleteById(id);
