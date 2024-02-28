@@ -20,6 +20,7 @@ public class User {
     private String password;
     private Boolean enabled;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "user_role",
@@ -28,7 +29,14 @@ public class User {
     )
     private List<Role> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+    /*
+     FetchType.EAGER : OneToOne, ManyToOne
+     FetchType.LAZY  : OneToMany, ManyToMany
+     */
+    // @JsonIgnore
+    //   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Board> boards = new ArrayList<>();;
 
 }
+
