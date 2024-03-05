@@ -3,6 +3,7 @@ package com.example.security.controller;
 import com.example.security.model.Board;
 import com.example.security.model.User;
 import com.example.security.repository.UserRepo;
+import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
@@ -17,8 +18,25 @@ class UserApiController {
     private UserRepo repository;
 
     @GetMapping("/users")
-    List<User> doAll(){
-        return repository.findAll();
+    List<User> doAll(@RequestParam(required = false) String method, @RequestParam(required = false) String text){
+
+        List<User> users = null;
+
+        if("query".equals(method)) {
+            users = repository.findByUsernameQuery(text);
+        } else if("nativeQuery".equals(method)) {
+            users = repository.findByUsernameNativeQuery(text);
+        } else if("querydsl".equals(method)) {
+//            QUser user = QUser.user();
+//            Predicate predicate = user.firstname.equalsIgnoreCase("dave")
+//                    .and(user.lastname.startsWithIgnoreCase("mathews"));
+//
+//            repository.findAll(predicate);
+        }else {
+            users = repository.findAll();
+        }
+
+        return  users;
     }
 
     @PostMapping("/users")

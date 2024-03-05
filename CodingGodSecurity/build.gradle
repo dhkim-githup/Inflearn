@@ -39,6 +39,15 @@ dependencies {
     // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity6
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
+    // Spring boot 3.x이상에서 QueryDsl 패키지를 정의하는 방법
+    //출처: https://kimjingyu.tistory.com/entry/QueryDSL-gradle-설정 [JingyuKim:티스토리]
+    // https://docs.google.com/document/d/1j0jcJ9EoXMGzwAA2H0b9TOvRtpwlxI5Dtn3sRtuXQas/edit
+    // queryDSL 설정
+    // ⭐ Spring boot 3.x이상에서 QueryDsl 패키지를 정의하는 방법
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -48,3 +57,4 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+

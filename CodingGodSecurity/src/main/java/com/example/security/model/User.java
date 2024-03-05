@@ -33,7 +33,7 @@ public class User {
      FetchType.EAGER : OneToOne, ManyToOne
      FetchType.LAZY  : OneToMany, ManyToMany
      */
-    // @JsonIgnore
+    //@JsonIgnore
     //   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = false)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Board> boards = new ArrayList<>();;
